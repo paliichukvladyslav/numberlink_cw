@@ -4,6 +4,7 @@ project('task34', 'cpp',
 
 sources = files(
   'task34.cc',
+  'cell.cc'
 )
 
 include_dir = include_directories('include')
