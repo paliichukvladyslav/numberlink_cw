@@ -7,5 +7,9 @@ int main() {
 	std::cout << test.get_char() << "\n";
 	std::cout << test.is_visited() << "\n";
 
+	Grid test_grid;
+
+	test_grid.display_grid();
+
 	return 0;
 }

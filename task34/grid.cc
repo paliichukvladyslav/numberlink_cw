@@ -1,0 +1,63 @@
+/* grid.cc - сітка з клітинок (реалізація) */
+#include <iostream>
+
+#include "grid.h"
+#include "direction.h"
+
+Grid::Grid(int n_size) : n(n_size) {
+	initialize_grid();
+	connect_all_cells();
+}
+
+void Grid::initialize_grid() {
+
+	cells.resize(n);
+
+	for(int y = 0; y < n; y++) {
+		cells[y].resize(n);
+		for(int x = 0; x < n; x++) {
+			cells[y][x] = new Cell('.');
+		}
+	}
+}
+
+void Grid::display_grid() {
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			std::cout << cells[y][x]->get_char() << ' ';
+		}	
+		std::cout << '\n';
+	}
+}
+
+void Grid::connect_all_cells() {
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+
+			if (y > 0 && cells[y][x] && cells[y - 1][x]) {
+				cells[y][x]->connect_to(*cells[y - 1][x], NORTH);
+			}
+
+			if (x > 0 && cells[y][x] && cells[y][x-1]) {
+				cells[y][x]->connect_to(*cells[y][x - 1], WEST);
+			}
+
+		}
+	}
+}
+
+void Grid::reset_all_visited() {
+	for(int y = 0; y < n; y++) {
+		for(int x = 0; x < n; x++) {
+			cells[y][x]->set_visited(false);
+		}
+	}
+}
+
+Grid::~Grid() {
+	for(int y = 0; y < n; y++) {
+		for(int x = 0; x < n; x++) {
+			delete cells[y][x];
+		}
+	}
+}

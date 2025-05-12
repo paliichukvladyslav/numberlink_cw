@@ -3,6 +3,7 @@
 #define COMMON_H
 
 #include "cell.h"
+#include "grid.h"
 
 #endif
 
