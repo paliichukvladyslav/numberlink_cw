@@ -1,5 +1,7 @@
 /* grid.cc - сітка з клітинок (реалізація) */
 #include <iostream>
+#include <string>
+#include <fstream>
 
 #include "grid.h"
 #include "direction.h"
@@ -44,6 +46,38 @@ void Grid::connect_all_cells() {
 
 		}
 	}
+}
+
+bool Grid::load_from_file(std::string &filename) {
+
+	for(int y = 0; y < n; y++) {
+		for(int x = 0; x < n; x++) {
+			delete cells[y][x];
+		}
+	}
+	cells.clear();
+
+	std::ifstream fin(filename.c_str());
+	if (!fin) return false;
+
+	char ch;
+	std::vector<Cell*> current_row;
+
+	while(fin.get(ch)) {
+		if (ch == '\n') {
+			cells.push_back(current_row);
+			current_row.clear();
+		} else {
+			current_row.push_back(new Cell(ch));
+		}
+	}
+
+	if(!current_row.empty()) cells.push_back(current_row);
+
+	connect_all_cells();
+
+	return true;
+
 }
 
 void Grid::reset_all_visited() {

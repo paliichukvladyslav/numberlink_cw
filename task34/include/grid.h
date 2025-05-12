@@ -3,6 +3,7 @@
 #define GRID_H 
 
 #include <vector>
+#include <string>
 
 #include "cell.h"
 #include "util.h"
@@ -26,6 +27,7 @@ public:
 	~Grid();
 
 	void initialize_grid();
+	bool load_from_file(std::string &filename);
 
 	void reset_all_visited();
 
