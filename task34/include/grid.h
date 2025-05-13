@@ -6,6 +6,7 @@
 #include <string>
 
 #include "cell.h"
+#include "pair.h"
 #include "util.h"
 
 /*
@@ -30,6 +31,8 @@ public:
 	bool load_from_file(std::string &filename);
 
 	void reset_all_visited();
+
+	std::vector<Pair> extract_pairs();
 
 	void display_grid();
 

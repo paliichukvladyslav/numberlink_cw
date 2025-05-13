@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <vector>
+
 #include "common.h"
 
 int main() {
@@ -16,6 +18,13 @@ int main() {
 	else {
 		std::cerr << "Виникла помилка при відкритті grid.txt\n";
 		return 1;
+	}
+
+	std::vector<Pair> pairs = test_grid.extract_pairs();
+	
+	std::vector<Pair>::iterator it;
+	for (it = pairs.begin(); it != pairs.end(); it++) {
+		std::cout << ((*it).get_start())->get_char() << ": " << (*it).get_start() << " - " << (*it).get_end() << "\n";
 	}
 
 	return 0;

@@ -5,7 +5,8 @@ project('task34', 'cpp',
 sources = files(
   'task34.cc',
   'cell.cc',
-  'grid.cc'
+  'grid.cc',
+  'pair.cc'
 )
 
 include_dir = include_directories('include')

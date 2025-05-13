@@ -1,10 +1,14 @@
 /* grid.cc - сітка з клітинок (реалізація) */
 #include <iostream>
+
 #include <string>
 #include <fstream>
 
+#include <map>
+
 #include "grid.h"
 #include "direction.h"
+#include "pair.h"
 
 Grid::Grid(int n_size) : n(n_size) {
 	initialize_grid();
@@ -86,6 +90,25 @@ void Grid::reset_all_visited() {
 			cells[y][x]->set_visited(false);
 		}
 	}
+}
+
+std::vector<Pair> Grid::extract_pairs() {
+	std::vector<Pair> result;
+	std::map<char, std::vector<Cell*> > m;
+
+	for (int y = 0; y < n; y++)
+		for (int x = 0; x < n; x++) {
+			Cell *cell = cells[y][x];
+			char ch = cell->get_char();
+			if (ch != '.' && std::isalnum(ch)) m[ch].push_back(cell);
+		}
+
+	std::map<char, std::vector<Cell*> >::iterator it;
+	for (it = m.begin(); it != m.end(); it++) {
+		if (it->second.size() == 2) result.push_back(Pair(it->second[0], it->second[1]));
+	}
+
+	return result;
 }
 
 Grid::~Grid() {
