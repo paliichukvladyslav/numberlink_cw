@@ -26,6 +26,16 @@ int main() {
 	for (it = pairs.begin(); it != pairs.end(); it++) {
 		std::cout << ((*it).get_start())->get_char() << ": " << (*it).get_start() << " - " << (*it).get_end() << "\n";
 	}
+	
+	Solver solver(&test_grid);
+
+	if (solver.solve()) {
+		std::cout << "Рішення знайдено:\n";
+		test_grid.display_grid();
+	} else {
+		test_grid.display_grid();
+		std::cout << "Рішення не знайдено\n";
+	}
 
 	return 0;
 }

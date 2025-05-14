@@ -5,6 +5,7 @@
 #include "cell.h"
 #include "grid.h"
 #include "pair.h"
+#include "solver.h"
 
 #endif
 

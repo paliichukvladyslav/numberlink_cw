@@ -6,7 +6,8 @@ sources = files(
   'task34.cc',
   'cell.cc',
   'grid.cc',
-  'pair.cc'
+  'pair.cc',
+  'solver.cc'
 )
 
 include_dir = include_directories('include')
