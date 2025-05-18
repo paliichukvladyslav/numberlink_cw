@@ -35,34 +35,66 @@ bool Solver::solve_recursive(int i) {
 
 bool Solver::dfs(Cell *cur, Cell *end, Pair &pair) {
 	if (cur == NULL) return false;
-	if (cur->is_visited() == true) return false;
+	if (cur->is_visited()) return false;
 
 	if (cur->get_char() != '.' && cur != pair.get_start() && cur != pair.get_end()) return false;
 
 	pair.get_path().push_back(cur);
 	cur->set_visited(true);
 
+	bool marked = false;
 	if (cur != pair.get_start() && cur != pair.get_end()) {
-		std::cout << "Marking: " << cur << " as " << pair.get_start()->get_char() << '\n';
 		cur->set_char(pair.get_start()->get_char());
+		marked = true;
 	}
-
-	std::cout << "DFS at: " << cur << " char=" << cur->get_char() << '\n';
 
 	/* шлях знайдено */
 	if (cur == end) return true;
 
-	if (dfs(cur->cell_in_direction(NORTH), end, pair)) return true;
-	if (dfs(cur->cell_in_direction(SOUTH), end, pair)) return true;
-	if (dfs(cur->cell_in_direction(WEST), end, pair)) return true;
-	if (dfs(cur->cell_in_direction(EAST), end, pair)) return true;
+	std::vector<Cell*> neighbors;
+	neighbors.push_back(cur->cell_in_direction(NORTH));
+	neighbors.push_back(cur->cell_in_direction(SOUTH));
+	neighbors.push_back(cur->cell_in_direction(WEST));
+	neighbors.push_back(cur->cell_in_direction(EAST));
 
-	if (cur != pair.get_start() && cur != pair.get_end()) cur->set_char('.');
+	/* сортуємо сусідні клітинки за мангеттенською відстанню до кінця */
+	std::sort(neighbors.begin(), neighbors.end(), CellDistanceComparator(grid, end));
 
-	cur->set_visited(false);
-	pair.get_path().pop_back();
+	bool found = false;
+	for (std::vector<Cell*>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {
+		if (dfs(*it, end, pair)) {
+			found = true;
+			break;
+		}
+	}
 
-	return false;
+	/* backtracking */
+	if (!found) {
+		if (marked) {
+			cur->set_char('.');
+		}
+		cur->set_visited(false);
+		pair.get_path().pop_back();
+	}
+
+	return found;
+}
+
+CellDistanceComparator::CellDistanceComparator(Grid *compgrid, Cell *end_cell) 
+	: grid(compgrid),
+		end(end_cell)
+{}
+
+bool CellDistanceComparator::operator()(Cell *a, Cell *b) {
+	std::pair<int, int> a_coords = grid->get_coords_of(a);
+	std::pair<int, int> b_coords = grid->get_coords_of(b);
+
+	std::pair<int, int> end_coords = grid->get_coords_of(end);
+
+	int dist_a = std::abs(a_coords.first - end_coords.first) + std::abs(a_coords.second - end_coords.second);
+	int dist_b = std::abs(b_coords.first - end_coords.first) + std::abs(b_coords.second - end_coords.second);
+
+	return dist_a < dist_b;
 }
 
 void Solver::reset_all_paths() {

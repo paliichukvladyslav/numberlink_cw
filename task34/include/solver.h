@@ -32,4 +32,16 @@ public:
 	
 };
 
+/*
+ * Компаратор для порівняння за Менгеттенською відстанню
+ */
+struct CellDistanceComparator {
+	Grid *grid;
+	Cell *end;
+
+	CellDistanceComparator(Grid *compgrid, Cell *end_cell);
+
+	bool operator()(Cell *a, Cell *b);
+};
+
 #endif

@@ -111,6 +111,17 @@ std::vector<Pair> Grid::extract_pairs() {
 	return result;
 }
 
+std::pair<int, int> Grid::get_coords_of(Cell *cell) {
+	for (int y = 0; y < n; y++) {
+		for (int x = 0; x < n; x++) {
+			if (cells[y][x] == cell) {
+				return std::make_pair(x, y);
+			}
+		}
+	}
+	return std::make_pair(-1, -1);
+}
+
 Grid::~Grid() {
 	for(int y = 0; y < n; y++) {
 		for(int x = 0; x < n; x++) {

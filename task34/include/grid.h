@@ -32,6 +32,8 @@ public:
 
 	void reset_all_visited();
 
+	std::pair<int, int> get_coords_of(Cell *cell);
+
 	std::vector<Pair> extract_pairs();
 
 	void display_grid();
