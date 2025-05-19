@@ -9,7 +9,13 @@
 Solver::Solver(Grid *grid_to_solve)
 	: grid(grid_to_solve),
 		pairs(grid_to_solve->extract_pairs())
-{}
+{
+	/* 
+	 * сортуємо пари за мангеттенською відстанню між їхніми клітинками
+	 * щоб вирішення задачі починалося з тих пар, відстань між якими найменша
+	 */
+	std::sort(pairs.begin(), pairs.end(), PairDistanceComparator(grid_to_solve));
+}
 
 bool Solver::solve() {
 	return solve_recursive(0);
@@ -85,6 +91,8 @@ CellDistanceComparator::CellDistanceComparator(Grid *compgrid, Cell *end_cell)
 		end(end_cell)
 {}
 
+PairDistanceComparator::PairDistanceComparator(Grid *compgrid) : grid(compgrid) {}
+
 bool CellDistanceComparator::operator()(Cell *a, Cell *b) {
 	std::pair<int, int> a_coords = grid->get_coords_of(a);
 	std::pair<int, int> b_coords = grid->get_coords_of(b);
@@ -93,6 +101,19 @@ bool CellDistanceComparator::operator()(Cell *a, Cell *b) {
 
 	int dist_a = std::abs(a_coords.first - end_coords.first) + std::abs(a_coords.second - end_coords.second);
 	int dist_b = std::abs(b_coords.first - end_coords.first) + std::abs(b_coords.second - end_coords.second);
+
+	return dist_a < dist_b;
+}
+
+bool PairDistanceComparator::operator()(Pair &a, Pair &b) {
+	std::pair<int, int> a_start = grid->get_coords_of(a.get_start());
+	std::pair<int, int> a_end = grid->get_coords_of(a.get_end());
+
+	std::pair<int, int> b_start = grid->get_coords_of(b.get_start());
+	std::pair<int, int> b_end = grid->get_coords_of(b.get_end());
+
+	int dist_a = std::abs(a_start.first - a_end.first) + std::abs(a_start.second - a_end.second);
+	int dist_b = std::abs(b_start.first - b_end.first) + std::abs(b_start.second - b_end.second);
 
 	return dist_a < dist_b;
 }

@@ -33,7 +33,7 @@ public:
 };
 
 /*
- * Компаратор для порівняння за Менгеттенською відстанню
+ * Компаратори для порівняння за Менгеттенською відстанню
  */
 struct CellDistanceComparator {
 	Grid *grid;
@@ -42,6 +42,14 @@ struct CellDistanceComparator {
 	CellDistanceComparator(Grid *compgrid, Cell *end_cell);
 
 	bool operator()(Cell *a, Cell *b);
+};
+
+struct PairDistanceComparator {
+	Grid *grid;
+
+	PairDistanceComparator(Grid *compgrid);
+
+	bool operator()(Pair &a, Pair &b);
 };
 
 #endif
