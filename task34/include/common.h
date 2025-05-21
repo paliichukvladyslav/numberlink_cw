@@ -6,6 +6,7 @@
 #include "grid.h"
 #include "pair.h"
 #include "solver.h"
+#include "ui.h"
 
 #endif
 

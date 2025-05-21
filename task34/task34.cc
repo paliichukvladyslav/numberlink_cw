@@ -11,7 +11,9 @@ int main() {
 	std::cout << test.is_visited() << "\n";
 
 	Grid test_grid(10);
-	std::string filename = "grid.txt";
+  TextUI test_ui;
+
+	std::string filename = test_ui.ask_filename();
 	if(test_grid.load_from_file(filename)) {
 		test_grid.display_grid();
 	}
