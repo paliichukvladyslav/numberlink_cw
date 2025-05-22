@@ -81,7 +81,7 @@ bool Grid::load_from_file(std::string &filename) {
 
 	if(!current_row.empty()) cells.push_back(current_row);
 
-  n = cells.size();
+	n = cells.size();
 
 	connect_all_cells();
 

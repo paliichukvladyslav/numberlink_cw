@@ -6,11 +6,11 @@
 
 Cell::Cell(char char_to_set)
 	: ch(char_to_set),
-		visited (false),
-		north   (NULL),
-		south   (NULL),
-		west    (NULL),
-		east    (NULL)
+	visited (false),
+	north   (NULL),
+	south   (NULL),
+	west    (NULL),
+	east    (NULL)
 {}
 
 char Cell::get_char() {

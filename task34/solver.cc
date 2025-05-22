@@ -8,7 +8,7 @@
 
 Solver::Solver(Grid *grid_to_solve)
 	: grid(grid_to_solve),
-		pairs(grid_to_solve->extract_pairs())
+	pairs(grid_to_solve->extract_pairs())
 {
 	/* 
 	 * сортуємо пари за мангеттенською відстанню між їхніми клітинками
@@ -88,7 +88,7 @@ bool Solver::dfs(Cell *cur, Cell *end, Pair &pair) {
 
 CellDistanceComparator::CellDistanceComparator(Grid *compgrid, Cell *end_cell) 
 	: grid(compgrid),
-		end(end_cell)
+	end(end_cell)
 {}
 
 PairDistanceComparator::PairDistanceComparator(Grid *compgrid) : grid(compgrid) {}
