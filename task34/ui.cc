@@ -8,15 +8,9 @@
 void TextUI::show_main_menu() {
   std::cout << "\n=== Numberlink ===\n";
   std::cout << "1. Ввести з файлу\n";
-  std::cout << "2. Згенерувати випадково\n";
-  std::cout << "3. Вийти\n";
-  std::cout << "Ваш вибір: ";
-}
-
-void show_secondary_menu() {
-  std::cout << "\n=== Numberlink ===\n";
-  std::cout << "1. Повернутись до головного меню\n";
-  std::cout << "2. Вийти\n";
+  std::cout << "2. Ввести вручну\n";
+  std::cout << "3. Згенерувати випадково\n";
+  std::cout << "4. Вийти\n";
   std::cout << "Ваш вибір: ";
 }
 
@@ -33,14 +27,6 @@ int TextUI::ask_choice(int min, int max) {
   }
 }
 
-int TextUI::ask_gridsize()  {
-  std::cout << "Введіть розмір поля (n): ";
-  int n;
-  std::cin >> n;
-  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-  return n;
-}
-
 bool TextUI::file_exists(std::string &filename) {
   std::ifstream f(filename.c_str());
   return f.good();
@@ -54,9 +40,18 @@ std::string TextUI::ask_filename() {
     return fname;
   } else {
     std::cerr << "Файл не існує";
-    throw "invalid file";
+    throw "invalid file\n";
   }
 }
+
+int TextUI::ask_grid_size()  {
+  std::cout << "Введіть розмір сітки (n): ";
+  int n;
+  std::cin >> n;
+  std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+  return n;
+}
+
 
 bool TextUI::ask_editor() {
   char *editor = std::getenv("EDITOR");
@@ -68,6 +63,6 @@ bool TextUI::ask_editor() {
   return status == 0;
 }
 
-void TextUI::print(std::string &msg) {
+void TextUI::print(const std::string &msg) {
   std::cout << msg << "\n";
 }

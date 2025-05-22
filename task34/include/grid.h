@@ -36,6 +36,8 @@ public:
 
 	std::vector<Pair> extract_pairs();
 
+	void random_fill(int num_pairs);
+
 	void display_grid();
 
 };

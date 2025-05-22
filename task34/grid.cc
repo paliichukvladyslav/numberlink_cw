@@ -6,6 +6,9 @@
 
 #include <map>
 
+#include <cstdlib>
+#include <ctime>
+
 #include "grid.h"
 #include "direction.h"
 #include "pair.h"
@@ -78,6 +81,8 @@ bool Grid::load_from_file(std::string &filename) {
 
 	if(!current_row.empty()) cells.push_back(current_row);
 
+  n = cells.size();
+
 	connect_all_cells();
 
 	return true;
@@ -120,6 +125,37 @@ std::pair<int, int> Grid::get_coords_of(Cell *cell) {
 		}
 	}
 	return std::make_pair(-1, -1);
+}
+
+void Grid::random_fill(int num_pairs) {
+
+	std::srand(std::time(0));
+
+	char ch = 'A';
+	for (int i = 0; i < num_pairs; ++i) {
+		if (ch > 'Z') break;
+
+		int x1, y1, x2, y2;
+
+		/* перша клітинка */
+		do {
+			x1 = std::rand() % n;
+			y1 = std::rand() % n;
+		} while (cells[y1][x1]->get_char() != '.');
+
+		cells[y1][x1]->set_char(ch);
+
+		/* друга клітинка */
+		do {
+			x2 = std::rand() % n;
+			y2 = std::rand() % n;
+		} while ((x1 == x2 && y1 == y2) || cells[y2][x2]->get_char() != '.');
+
+		cells[y2][x2]->set_char(ch);
+
+		ch++;
+	}
+
 }
 
 Grid::~Grid() {

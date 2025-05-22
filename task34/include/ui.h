@@ -13,14 +13,13 @@ private:
 public:
 
   void show_main_menu();
-  void show_secondary_menu();
 
   int ask_choice(int min, int max);
-  int ask_gridsize();
+	int ask_grid_size();
   std::string ask_filename();
   bool ask_editor();
 
-  void print(std::string &msg);
+  void print(const std::string &msg);
 };
 
 #endif
